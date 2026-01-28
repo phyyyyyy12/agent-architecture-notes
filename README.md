@@ -39,14 +39,14 @@
 
 #### 3. 终极心法：AI 进化的闭环
 
-没错！这就是 **Reflexion（以及所有基于 In-Context Learning 的 Agent）** 面临的最大物理瓶颈：**Context Window（上下文窗口）有限**。
+**Reflexion（以及所有基于 In-Context Learning 的 Agent）** 面临的最大物理瓶颈：**Context Window（上下文窗口）有限**。
 
 如果 Agent 试错 100 次，产生 100 张“反思小纸条”，把它们全塞进 Prompt 里，结果只有两个：
 
 1. **挤爆了：** 超过了 token 上限（比如 8k 或 128k），模型报错。
 2. **迷糊了：** “纸条”太多，模型注意力分散（Lost in the Middle），反而不知道该听哪一条。
 
-所以，在工程实现上，我们绝对不会“傻傻地一直往后追加”。我们有一套**“记忆管理系统” (Memory Management System)** 来解决这个问题。
+所以，在工程实现上，绝对不会“傻傻地一直往后追加”。有一套**“记忆管理系统” (Memory Management System)** 来解决这个问题。
 
 主要有三招：**遗忘（FIFO）、压缩（Summarization）和 归档（Vector DB）。**
 
@@ -83,8 +83,6 @@
 * 数据库返回 3 条相关的反思。
 * 代码把这 **3 条相关的** 塞进 Prompt。
 * **其他的 97 条无关反思（比如怎么钓鱼、怎么做饭）虽然存下来了，但不会占用当前的 Prompt 空间。**
-
-
 
 **这就完美解决了“纸条太多”的问题：** 脑容量（Prompt）有限，但笔记本（Database）是无限的。用的时候再翻书。
 
